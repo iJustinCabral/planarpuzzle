@@ -1,0 +1,1 @@
+// Controller for extending color and solving the puzzle

@@ -1,0 +1,1 @@
+// Controller for resetting the puzzle to initial configuration
