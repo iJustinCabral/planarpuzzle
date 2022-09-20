@@ -1,1 +1,0 @@
-// Controller for selecting the puzzle configuration
