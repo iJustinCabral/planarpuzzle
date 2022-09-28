@@ -14,11 +14,11 @@ export class ExtendType {
     }
 }
 
-export const Down = ExtendType(1, 0, "down")
-export const Up = ExtendType(-1, 0, "up")
-export const Left = ExtendType(0, -1, "left")
-export const Right = ExtendType(0, 1, "right")
-export const NoMove = ExtendType(0, 0, "*")
+export const Down = new ExtendType(1, 0, "down")
+export const Up = new ExtendType(-1, 0, "up")
+export const Left = new ExtendType(0, -1, "left")
+export const Right = new ExtendType(0, 1, "right")
+export const NoMove = new ExtendType(0, 0, "*")
 
 
 
@@ -44,19 +44,24 @@ export class Square {
     contains(coordinate) {
 
     }
+
+    place(row, col) {
+        this.row = row;
+        this.column = col;
+    }
+    
 }
 
 export class PlanarPuzzle {
-    constructor(name, numRows, numColumns, selected, destination) {
+    constructor(name, numRows, numColumns, baseSquares, unusedSquares, emptySquares) {
         this.name = name
         this.numRows = numRows
         this.numColumns = numColumns
-        this.selected = selected
-        this.destination = destination
-
-    }
-
-    initialize(baseSquares, unusedSquares, emptySquares) {
+        this.selected = null
+        this.baseSquares = baseSquares
+        this.unusedSquares = unusedSquares
+        this.emptySquares = emptySquares
+        this.squares = emptySquares + baseSquares + unusedSquares
 
     }
 
@@ -84,9 +89,12 @@ export default class Model {
     }
 
     initialize(info) {
-        let numRows = pasrseInt(info.board.rows)
-        let numColumns = parseInt(info.board.columns)
-        
+        let numRows = parseInt(info.rows)
+        let numColumns = parseInt(info.columns)
+        let numEmptySquares = parseInt(info.emptySquares.length)
+        let victory = false
+
+        this.puzzle = new PlanarPuzzle(info.name, numRows, numColumns, info.baseSquares, info.unusedSquares, info.emptySquares)
 
     }
 
