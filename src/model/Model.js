@@ -34,7 +34,8 @@ export class Square {
         this.row = row
         this.column = column
         this.count = count
-        this.color = color 
+        this.color = color
+        this.label = "" 
     }
 
     extendColor(direction) {
@@ -49,6 +50,17 @@ export class Square {
         this.row = row;
         this.column = col;
     }
+
+    location() {
+        return new Coordinate(this.row, this.column)
+    }
+
+    // Needed for solving without using the GUI
+    copy() {
+        let s = new Square(this.width, this.height, this.color, this.count);
+        s.place(this.row, this.column);
+        return s;
+    }
     
 }
 
@@ -61,8 +73,17 @@ export class PlanarPuzzle {
         this.baseSquares = baseSquares
         this.unusedSquares = unusedSquares
         this.emptySquares = emptySquares
-        this.squares = [].concat(emptySquares, baseSquares, unusedSquares)
-       
+        
+    }
+
+    initialize(squares) {
+        this.squares = squares.map(s => s.copy())
+    }
+
+    *blocks() {
+        for(let i = 0; i < this.squares.length; i++) {
+            yield this.pieces[i]
+        }
     }
 
     isSolved() {
@@ -93,7 +114,19 @@ export default class Model {
         let numColumns = parseInt(info.columns)
         var numEmptySquares = parseInt(info.emptySquares.length)
         var victory = false
+        let showLabels = false
+
+        var squares = [].concat(info.emptySquares, info.baseSquares, info.unusedSquares)
+        var allSquares = []
+
+        for (let s of squares) {
+            var newSqaure = new Square(parseInt(s.row), parseInt(s.column), s.color, 0)
+            newSqaure.place(s.row, s.column)
+            allSquares.push(newSqaure)
+        }
+
         this.puzzle = new PlanarPuzzle(info.name, numRows, numColumns, info.baseSquares, info.unusedSquares, info.emptySquares)
+        this.puzzle.initialize(allSquares)
 
     }
 
