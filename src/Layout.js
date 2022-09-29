@@ -1,7 +1,10 @@
+import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
+
 export const layout = {
     canvas : {
           height: "500",
-          width: "500",
+          width: "400",
+          border: "2px solid #000"
       },
     
     Appmain : {

@@ -49,6 +49,13 @@ function drawPuzzle(context, puzzle, showLabels) {
         context.shadowBlur = 5
         context.fillRect(rect.x, rect.y, rect.width, rect.height)
 
+        
+        if(square.color != "white") {
+            context.fillStyle = "black"
+            context.font = "20px Times New Roman"
+            context.fillText(square.count, rect.x + 20, rect.y + 30)
+        }
+
     })
 
 }

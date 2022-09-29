@@ -38,6 +38,7 @@ function App() {
       width={layout.canvas.width}
       height={layout.canvas.height}
       onClick={handleClick}
+      style={layout.canvas}
       />
 
       <div style={layout.buttons}>

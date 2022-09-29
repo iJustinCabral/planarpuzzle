@@ -35,7 +35,6 @@ export class Square {
         this.column = column
         this.color = color
         this.count = count
-        this.label = "" 
     }
 
     extendColor(direction) {
