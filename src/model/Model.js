@@ -30,11 +30,11 @@ export class Coordinate {
 }
 
 export class Square {
-    constructor(row, column, count, color) {
+    constructor(row, column, color, count) {
         this.row = row
         this.column = column
-        this.count = count
         this.color = color
+        this.count = count
         this.label = "" 
     }
 

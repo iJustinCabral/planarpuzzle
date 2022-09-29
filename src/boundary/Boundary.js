@@ -1,4 +1,4 @@
-var BOXSIZE = 60;
+var BOXSIZE = 50;
 const OFFSET = 1;
 
 export class Rectangle {
@@ -24,7 +24,7 @@ function drawPuzzle(context, puzzle, showLabels) {
         let rect = computeRectangle(square)
 
         if (square === selected) {
-            context.fillStyle = "pink"
+            context.fillStyle = "lightgrey"
         } else {
             if (square.color === "white") {
                 context.fillStyle = "white"
@@ -41,12 +41,12 @@ function drawPuzzle(context, puzzle, showLabels) {
             else if (square.color === "blue") {
                 context.fillStyle = "blue"
             }
-            else {
+            else if (square.color === "black") {
                 context.fillStyle = "black"
             }
         }
          
-        context.shadowBlur = 4
+        context.shadowBlur = 5
         context.fillRect(rect.x, rect.y, rect.width, rect.height)
 
     })

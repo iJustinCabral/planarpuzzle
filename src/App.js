@@ -9,7 +9,7 @@ import Model from './model/Model.js'
 
 function App() {
 
-  var puzzle = JSON.parse(JSON.stringify(config1))
+  var puzzle = JSON.parse(JSON.stringify(config2))
   const [model, setModel] = React.useState(new Model(puzzle))
 
   const appRef = React.useRef(null)
