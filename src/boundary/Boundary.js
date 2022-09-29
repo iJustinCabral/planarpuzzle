@@ -1,4 +1,4 @@
-var BOXSIZE = 80;
+var BOXSIZE = 60;
 const OFFSET = 1;
 
 export class Rectangle {
@@ -9,10 +9,10 @@ export class Rectangle {
       this.height = height;
     }
 
-    /** Does the (x,y) point exist within the rectangle. */
     contains(x, y) {
       return x >= this.x && x <= (this.x + this.width) && y >= this.y && y <= (this.y + this.height);
-  }
+    }
+
 }
 
 function drawPuzzle(context, puzzle, showLabels) {
@@ -24,9 +24,8 @@ function drawPuzzle(context, puzzle, showLabels) {
         let rect = computeRectangle(square)
 
         if (square === selected) {
-            context.fillStyle = "lightgrey"
+            context.fillStyle = "pink"
         } else {
-
             if (square.color === "white") {
                 context.fillStyle = "white"
             }
@@ -36,7 +35,13 @@ function drawPuzzle(context, puzzle, showLabels) {
             else if (square.color === "orange") {
                 context.fillStyle = "orange"
             }
-            else if (square.color === "black") {
+            else if (square.color === "yellow") {
+                context.fillStyle = "yellow"
+            }
+            else if (square.color === "blue") {
+                context.fillStyle = "blue"
+            }
+            else {
                 context.fillStyle = "black"
             }
         }

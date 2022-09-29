@@ -86,6 +86,10 @@ export class PlanarPuzzle {
         }
     }
 
+    select(piece) {
+        this.selected = piece;
+    }
+
     isSolved() {
         return true
     }
@@ -102,11 +106,26 @@ export class PlanarPuzzle {
 
     }
 
+    clone() {
+        let copy = new PlanarPuzzle(this.name, this.numRows, this.numColumns, this.selected, this.baseSquares, this.unusedSquares, this.emptySquares);
+        copy.squares = [];
+        for (let s of this.squares) {
+            let duplicate = s.copy();
+            copy.squares.push(duplicate);
+            if (s === this.selected) {
+                copy.selected = duplicate;
+            }
+        }
+        
+        return copy;
+    }
+
 }
 
 export default class Model {
     constructor(info) {
         this.initialize(info)
+        this.info = info
     }
 
     initialize(info) {
@@ -144,5 +163,16 @@ export default class Model {
 
     setConfiguration() {
         
+    }
+
+    copy() {
+        let m = new Model(this.info);    
+        m.numRows = this.numRows
+        m.numColumns = this.numColumns             
+        m.puzzle = this.puzzle.clone();
+        m.numMoves = this.numEmptySquares;
+        m.showLabels = this.showLabels;
+        m.victory = this.victory;
+        return m;
     }
 }
