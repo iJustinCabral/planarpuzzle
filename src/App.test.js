@@ -18,4 +18,7 @@ test('Expect App to be rendered', () => {
   expect(<App/>)
 });
 
+test('Expect squares array to not be empty when puzzle starts', () => {
+  expect(model.squares.length != 0)
+});
 

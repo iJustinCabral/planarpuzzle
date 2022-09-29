@@ -20,6 +20,30 @@ function drawPuzzle(context, puzzle) {
     context.shadowColor = "black"
     let selected = puzzle.selected
 
+    puzzle.squares.forEach(square => {
+        let rect = computeRectangle(square)
+
+        if (square.color === "white") {
+            context.fillStyle = "white"
+        }
+        else if (square.color === "red") {
+            context.fillStyle = "red"
+        }
+        else if (square.color === "orange") {
+            context.fillStyle = "orange"
+        }
+        else if (square.color === "black") {
+            context.fillStyle = "black"
+        }
+        else if (square === selected) {
+            context.fillStyle = "lightgrey"
+        }
+
+        context.shadowBlur = 4
+        context.fillRect(rect.x, rect.y, rect.width, rect.height)
+
+    })
+
 }
 
 export function computeRectangle(square) {

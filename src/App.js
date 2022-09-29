@@ -12,6 +12,8 @@ function App() {
   var puzzle = JSON.parse(JSON.stringify(config1))
   const [model, setModel] = React.useState(new Model(puzzle))
 
+  console.log(model.puzzle.squares)
+
   const appRef = React.useRef(null)
   const canvasRef = React.useRef(null)
 

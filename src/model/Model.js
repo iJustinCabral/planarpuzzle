@@ -61,8 +61,8 @@ export class PlanarPuzzle {
         this.baseSquares = baseSquares
         this.unusedSquares = unusedSquares
         this.emptySquares = emptySquares
-        this.squares = emptySquares + baseSquares + unusedSquares
-
+        this.squares = [].concat(emptySquares, baseSquares, unusedSquares)
+       
     }
 
     isSolved() {
@@ -91,9 +91,8 @@ export default class Model {
     initialize(info) {
         let numRows = parseInt(info.rows)
         let numColumns = parseInt(info.columns)
-        let numEmptySquares = parseInt(info.emptySquares.length)
-        let victory = false
-
+        var numEmptySquares = parseInt(info.emptySquares.length)
+        var victory = false
         this.puzzle = new PlanarPuzzle(info.name, numRows, numColumns, info.baseSquares, info.unusedSquares, info.emptySquares)
 
     }
