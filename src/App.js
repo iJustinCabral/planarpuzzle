@@ -9,7 +9,7 @@ import Model from './model/Model.js'
 
 function App() {
 
-  var puzzle = JSON.parse(JSON.stringify(config2))
+  var puzzle = JSON.parse(JSON.stringify(config1))
   const [model, setModel] = React.useState(new Model(puzzle))
 
   const appRef = React.useRef(null)
@@ -42,10 +42,10 @@ function App() {
       />
 
       <div style={layout.buttons}>
-         <button data-testid="upbutton" style={layout.upbutton}>Up</button>
-         <button data-testid="leftbutton" style={layout.leftbutton}>Left</button>
-         <button data-testid="rightbutton" style={layout.rightbutton}>Right</button>
-         <button data-testid="downbutton" style={layout.downbutton}>Down</button>
+         <button data-testid="upbutton" style={layout.upbutton}  onClick={(e) => extenColorHandler(Up)} disabled={!model.isValid(Up)}>Up</button>
+         <button data-testid="leftbutton" style={layout.leftbutton} onClick={(e) => extenColorHandler(Left)} disabled={!model.isValid(Left)}>Left</button>
+         <button data-testid="rightbutton" style={layout.rightbutton} onClick={(e) => extenColorHandler(Right)} disabled={!model.isValid(Right)}>Right</button>
+         <button data-testid="downbutton" style={layout.downbutton} onClick={(e) => extenColorHandler(Down)} disabled={!model.isValid(Down)}>Down</button>
          
          <button data-testid="resetbutton" style={layout.resetbutton}>Reset Puzzle</button>
 

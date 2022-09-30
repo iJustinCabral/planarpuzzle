@@ -1,3 +1,5 @@
+import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils"
+
 export class ExtendType {
     constructor(deltaRow, deltaColumn) {
         this.deltaRow = deltaRow
@@ -37,12 +39,9 @@ export class Square {
         this.count = count
     }
 
-    extendColor(direction) {
-
-    }
-
-    contains(coordinate) {
-
+    extend(direction) {
+        this.row += direction.deltaRow
+        this.column += direction.deltaColumn
     }
 
     place(row, col) {
@@ -56,7 +55,7 @@ export class Square {
 
     // Needed for solving without using the GUI
     copy() {
-        let s = new Square(this.width, this.height, this.color, this.count);
+        let s = new Square(this.row, this.column, this.color, this.count);
         s.place(this.row, this.column);
         return s;
     }
@@ -85,19 +84,80 @@ export class PlanarPuzzle {
         }
     }
 
-    select(piece) {
-        this.selected = piece;
+    select(square) {
+        if (square.color === "black") { return }        
+        this.selected = square;
+    }
+
+    isSelected(square) {
+        return square === this.selected
     }
 
     isSolved() {
         return true
     }
 
-    isValid(coordinate) {
-        return true
+    isEmptySquare(coordinate) {
+        
+        let loc = coordinate
+        let output = false
+
+        this.squares.forEach(square => {
+            if (square.row == coordinate.row && square.column == coordinate.column) {
+                if (square.color == "white") {
+                    output = true
+                }
+            }
+        })
+
+        return output
     }
 
     validExtensions() {
+        let square = this.selected
+        if (square === null) { return [] }
+        if (square.color === "white" || square.color === "black") { return [] }
+
+        let extensions = []
+        let coordinate = this.selected.location()
+
+        // Check if move to Left is valid
+        let valid = false
+        if (coordinate.column > 0) {
+            valid = this.isEmptySquare(new Coordinate(coordinate.row, coordinate.column - 1))
+        }
+        if (valid) { extensions.push(Left) }
+
+        // Check if move to Right is valid
+        valid = false
+        if (coordinate.column < this.numColumns) {
+            let rightC = parseInt(coordinate.column) + 1
+            valid = this.isEmptySquare(new Coordinate(coordinate.row, rightC))
+            console.log("Right: " + rightC)
+        }
+        if (valid) { extensions.push(Right) }
+
+        // Check if move to Up is valid
+        valid = false
+        if (coordinate.row > 0 ) {
+            let topR = parseInt(coordinate.row) - 1
+            valid = this.isEmptySquare(new Coordinate(topR, coordinate.column))
+            console.log("Top: " + topR)
+
+        }
+        if (valid) { extensions.push(Up) }
+
+        // Check if move to Up is valid
+        valid = false
+        if (coordinate.row < this.numRows) {
+            let bottomR = parseInt(coordinate.row) + 1
+            valid = this.isEmptySquare(new Coordinate(bottomR, coordinate.column))
+            console.log("Bottom: " + bottomR)
+        }
+        if (valid) { extensions.push(Down) }
+
+
+        return extensions
 
     }
 
@@ -148,8 +208,21 @@ export default class Model {
 
     }
 
-    updateEmptySquareCount() {
+    updateEmptySquareCount(delta) {
+        this.emptySquares -= delta
+    }
 
+
+    emptySquares() {
+        return this.emptySquares
+    }
+
+    isValid(direction) {
+        if (!this.puzzle.selected) { return false } 
+        if (direction === NoMove) { return false }
+
+        let allExtensions = this.puzzle.validExtensions()
+        return allExtensions.includes(direction)
     }
 
     isVictorious() {
@@ -169,7 +242,7 @@ export default class Model {
         m.numRows = this.numRows
         m.numColumns = this.numColumns             
         m.puzzle = this.puzzle.clone();
-        m.numMoves = this.numEmptySquares;
+        m.numEmptySquares = this.numEmptySquares;
         m.showLabels = this.showLabels;
         m.victory = this.victory;
         return m;
