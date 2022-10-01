@@ -88,7 +88,10 @@ export class PlanarPuzzle {
 
     select(square) {
         if (square.color === "black") { return } 
-        if (this.selected === square) { this.selected = null; return}      
+        if (this.selected === square) { this.selected = null; return}   
+        if (square.count < this.checkPathCount(square.color) && square.color != "white") { 
+            return 
+        }   
 
         this.selected = square;
     }
@@ -180,8 +183,27 @@ export class PlanarPuzzle {
 
     }
 
-    checkPathCount(color) {
+    emptySquareCount() {
+        let count = 0
+        this.squares.forEach(square => {
+            if (square.color == "white") {
+                count += 1
+            }
+        })
 
+        console.log(count)
+        return count
+    }
+
+    checkPathCount(color) {
+        let count = 0
+        this.squares.forEach(square => {
+            if (square.color === color) {
+                count += 1
+            }
+        })
+
+        return count - 2
     }
 
     clone() {
@@ -217,11 +239,6 @@ export default class Model {
         var level3 = JSON.parse(JSON.stringify(config3))
         this.configurations = [level0,level1,level2,level3]
 
-
-        let emptySquares = [].concat(info.emptySquares)
-        var numEmptySquares = emptySquares.length
-
-        console.log(this.numEmptySquares)
         var squares = [].concat(info.emptySquares, info.baseSquares, info.unusedSquares)
         var allSquares = []
 
@@ -235,13 +252,7 @@ export default class Model {
         this.puzzle.initialize(allSquares)
     }
 
-    updateEmptySquareCount(delta) {
-        this.numEmptySquares -= delta
-        console.log("Empty Squares: " + this.numEmptySquares)
-    }
-
     currentConfigutation() {
-        console.log("Test reset")
         if (this.puzzle.name === "Level-1") {
             return this.configurations[1]
         }
@@ -251,13 +262,7 @@ export default class Model {
         else if (this.puzzle.name === "Level-3") {
             return this.configurations[3]
         }
-
         return this.configurations[0]
-    }
-
-
-    emptySquares() {
-        return this.numEmptySquares
     }
 
     isValid(direction) {
@@ -269,15 +274,7 @@ export default class Model {
     }
 
     isVictorious() {
-        return true
-    }
-
-    didResetPuzzle() {
-
-    }
-
-    setConfiguration() {
-        
+        return false
     }
 
     copy() {

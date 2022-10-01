@@ -30,9 +30,8 @@ export function extendColor(model, direction) {
     if (!selected) { return model }
 
     model.puzzle.extend(direction)
-    model.updateEmptySquareCount(1)
+    model.puzzle.emptySquareCount()
     return model.copy()
-
 
 }
 
