@@ -80,17 +80,37 @@ export class PlanarPuzzle {
 
     *blocks() {
         for(let i = 0; i < this.squares.length; i++) {
-            yield this.pieces[i]
+            yield this.squares[i]
         }
     }
 
     select(square) {
-        if (square.color === "black") { return }        
+        if (square.color === "black") { return } 
+        if (this.selected === square) { this.selected = null; return}      
+
         this.selected = square;
     }
 
     isSelected(square) {
         return square === this.selected
+    }
+
+    extend(direction) {
+
+        let row = parseInt(this.selected.row) + direction.deltaRow
+        row = "" + row
+
+        let column = parseInt(this.selected.column) + direction.deltaColumn
+        column = "" + column
+
+        let coordinate = new Coordinate(row, column)
+        this.squares.findIndex(square => {
+            if (coordinate.row === square.row && coordinate.column === square.column) {
+                square.color = this.selected.color
+                square.count += this.selected.count + 1
+                this.selected = null
+            }
+        })
     }
 
     isSolved() {
@@ -133,7 +153,6 @@ export class PlanarPuzzle {
         if (coordinate.column < this.numColumns) {
             let rightC = parseInt(coordinate.column) + 1
             valid = this.isEmptySquare(new Coordinate(coordinate.row, rightC))
-            console.log("Right: " + rightC)
         }
         if (valid) { extensions.push(Right) }
 
@@ -142,7 +161,6 @@ export class PlanarPuzzle {
         if (coordinate.row > 0 ) {
             let topR = parseInt(coordinate.row) - 1
             valid = this.isEmptySquare(new Coordinate(topR, coordinate.column))
-            console.log("Top: " + topR)
 
         }
         if (valid) { extensions.push(Up) }
@@ -152,7 +170,6 @@ export class PlanarPuzzle {
         if (coordinate.row < this.numRows) {
             let bottomR = parseInt(coordinate.row) + 1
             valid = this.isEmptySquare(new Coordinate(bottomR, coordinate.column))
-            console.log("Bottom: " + bottomR)
         }
         if (valid) { extensions.push(Down) }
 
@@ -190,10 +207,13 @@ export default class Model {
     initialize(info) {
         let numRows = parseInt(info.rows)
         let numColumns = parseInt(info.columns)
-        var numEmptySquares = parseInt(info.emptySquares.length)
         var victory = false
         let showLabels = false
 
+        let emptySquares = [].concat(info.emptySquares)
+        var numEmptySquares = emptySquares.length
+
+        console.log(this.numEmptySquares)
         var squares = [].concat(info.emptySquares, info.baseSquares, info.unusedSquares)
         var allSquares = []
 
@@ -209,12 +229,13 @@ export default class Model {
     }
 
     updateEmptySquareCount(delta) {
-        this.emptySquares -= delta
+        this.numEmptySquares -= delta
+        console.log("Empty Squares: " + this.numEmptySquares)
     }
 
 
     emptySquares() {
-        return this.emptySquares
+        return this.numEmptySquares
     }
 
     isValid(direction) {

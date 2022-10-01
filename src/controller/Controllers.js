@@ -29,7 +29,7 @@ export function extendColor(model, direction) {
     let selected = model.puzzle.selected
     if (!selected) { return model }
 
-    selected.extend(direction)
+    model.puzzle.extend(direction)
     model.updateEmptySquareCount(1)
     return model.copy()
 
