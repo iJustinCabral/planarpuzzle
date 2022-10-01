@@ -1,8 +1,10 @@
 import { computeRectangle } from "../boundary/Boundary";
+import Model from "../model/Model";
 
 
-export function selectConfig(model, canvas, event) {
-
+export function selectConfig(model, level) {
+    let config = model.configurations[level]
+    return new Model(config)
 }
 
 export function selectSquare(model, canvas, event) {
@@ -19,8 +21,6 @@ export function selectSquare(model, canvas, event) {
     } 
 
     console.log(selected)
-
-    // select this piece! Construct new model to represent this situation.
     model.puzzle.select(selected);
     return model.copy();
 }
@@ -36,6 +36,7 @@ export function extendColor(model, direction) {
 
 }
 
-export function resetPuzzle(model, canvas) {
-    
+export function resetPuzzle(model) {
+    let puzzle = model.currentConfigutation()
+    return new Model(puzzle)
 }

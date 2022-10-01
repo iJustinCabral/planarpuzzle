@@ -2,7 +2,7 @@ import { toBePartiallyChecked } from "@testing-library/jest-dom/dist/matchers";
 
 export const layout = {
     canvas : {
-          height: "500",
+          height: "400",
           width: "400",
           border: "2px solid #000"
       },
@@ -33,11 +33,12 @@ export const layout = {
 
     victory: { 
         position: "absolute",
-        left:500,
-        top:10,
+        left:460,
+        top:300,
         color:"green",
-        backgroundColor: "#747373",
-        width:150,
+        backgroundColor: "white",
+        width: 320,
+        font: "24px Times New Roman"
       },
 
     buttons: { 

@@ -1,4 +1,6 @@
 import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils"
+import { config0, config1, config2, config3 } from  './PuzzleConfigs.js'
+
 
 export class ExtendType {
     constructor(deltaRow, deltaColumn) {
@@ -208,7 +210,13 @@ export default class Model {
         let numRows = parseInt(info.rows)
         let numColumns = parseInt(info.columns)
         var victory = false
-        let showLabels = false
+
+        var level0 = JSON.parse(JSON.stringify(config0))
+        var level1 = JSON.parse(JSON.stringify(config1))
+        var level2 = JSON.parse(JSON.stringify(config2))
+        var level3 = JSON.parse(JSON.stringify(config3))
+        this.configurations = [level0,level1,level2,level3]
+
 
         let emptySquares = [].concat(info.emptySquares)
         var numEmptySquares = emptySquares.length
@@ -225,12 +233,26 @@ export default class Model {
 
         this.puzzle = new PlanarPuzzle(info.name, numRows, numColumns, info.baseSquares, info.unusedSquares, info.emptySquares)
         this.puzzle.initialize(allSquares)
-
     }
 
     updateEmptySquareCount(delta) {
         this.numEmptySquares -= delta
         console.log("Empty Squares: " + this.numEmptySquares)
+    }
+
+    currentConfigutation() {
+        console.log("Test reset")
+        if (this.puzzle.name === "Level-1") {
+            return this.configurations[1]
+        }
+        else if (this.puzzle.name === "Level-2") {
+            return this.configurations[2]
+        }
+        else if (this.puzzle.name === "Level-3") {
+            return this.configurations[3]
+        }
+
+        return this.configurations[0]
     }
 
 
@@ -247,7 +269,7 @@ export default class Model {
     }
 
     isVictorious() {
-
+        return true
     }
 
     didResetPuzzle() {
