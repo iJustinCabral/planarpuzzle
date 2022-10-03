@@ -50,7 +50,18 @@ function drawPuzzle(context, puzzle, showLabels) {
         context.fillRect(rect.x, rect.y, rect.width, rect.height)
 
         
-        if(square.color != "white") {
+        if(square.color != "white" && square.count == 0) {
+            if (square.color == "red" || square.color == "blue") {
+                context.fillStyle = "black"
+                context.font = "18px Times New Roman"
+                context.fillText(square.color, rect.x + 12, rect.y + 30)
+            }
+            if (square.color == "orange" || square.color == "yellow") {
+                context.fillStyle = "black"
+                context.font = "16px Times New Roman"
+                context.fillText(square.color, rect.x + 2, rect.y + 30)
+            }
+        } else if (square.color != "white") {
             context.fillStyle = "black"
             context.font = "20px Times New Roman"
             context.fillText(square.count, rect.x + 20, rect.y + 30)

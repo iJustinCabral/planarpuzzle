@@ -129,7 +129,6 @@ export const config3 = {
                      {"color":"white", "row": "6", "column": "4"},
                      {"color":"white", "row": "6", "column": "5"},
                      {"color":"white", "row": "6", "column": "6"},
-                     {"color":"white", "row": "7", "column": "0"},
                      {"color":"white", "row": "7", "column": "1"},
                      {"color":"white", "row": "7", "column": "2"},
                      {"color":"white", "row": "7", "column": "3"},
@@ -138,3 +137,4 @@ export const config3 = {
                      {"color":"white", "row": "7", "column": "6"},
                     ]
 }
+

@@ -20,6 +20,7 @@ function App() {
     }, [model]) 
 
     const handleClick = (e) => {
+      console.log(e.screenX, e.screenY, e.clientX, e.clientY)
       let newModel = selectSquare(model, canvasRef.current, e)
       setModel(newModel)
     }
@@ -51,7 +52,7 @@ function App() {
       style={layout.canvas}
       />
 
-      { model.isVictorious() ? (<label data-testid="victory-label" style={layout.victory}>Congratulations! Puzzle Solved!</label>) : null }
+      { model.victory ? (<label data-testid="victory-label" style={layout.victory}>Congratulations! Puzzle Solved!</label>) : null }
 
       <div style={layout.buttons}>
          <button data-testid="upbutton" style={layout.upbutton}  onClick={(e) => extenColorHandler(Up)} disabled={!model.isValid(Up)}>Up</button>

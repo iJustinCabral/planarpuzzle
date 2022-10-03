@@ -19,8 +19,7 @@ export function selectSquare(model, canvas, event) {
     if (idx >= 0) {
       selected = model.puzzle.squares[idx];
     } 
-
-    console.log(selected)
+    
     model.puzzle.select(selected);
     return model.copy();
 }
@@ -30,7 +29,7 @@ export function extendColor(model, direction) {
     if (!selected) { return model }
 
     model.puzzle.extend(direction)
-    model.puzzle.emptySquareCount()
+    model.isVictorious()
     return model.copy()
 
 }
