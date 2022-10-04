@@ -127,7 +127,7 @@ test('Valid First Moves', () => {
 
 })
 
-test('Test solve puzzle', () => {
+test('Expect to solve puzzle', () => {
   var square = model.puzzle.squares.find(square => square.row == 0 && square.column == 0)
   model.puzzle.select(square)
   expect(model.puzzle.selected == square)
@@ -224,8 +224,6 @@ test('Expect Buttons be to be rendered and disabled', () => {
   expect(leftButton.disabled).toBeTruthy()
   expect(rightButton.disabled).toBeTruthy()
 
-  // 83 162 83 83
-  // 31 108 31 29
   fireEvent.click(canvasElememnt, {screenX: 31, screenY: 108, clienX: 31, clientY: 29})
 })
 

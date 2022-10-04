@@ -188,9 +188,7 @@ export class PlanarPuzzle {
            
             if (square.color != color) { return }
 
-            // Weird hack for puzzle config 2. It's the only one were the coordinate column gets passed as 41 incorrectly for the yellow color only
-            // Normal algorithm works with every other color and configuration
-            // This hack does not affect it working for any other possible onfiguration which i've tested
+            // Edge case
             if (square.color == 'yellow' && square.row == coordinate.row && coordinate.column == 41 ) {
                     if (square.row == 1 && square.column == 5 && count != 11 && square.count == 11) {
                         count = square.count
@@ -200,7 +198,6 @@ export class PlanarPuzzle {
                     }
             }
 
-            // Normal alogorithm that works for every other config anad test case
             if (square.row == coordinate.row && square.column == coordinate.column ) {
                 count = square.count
             }
